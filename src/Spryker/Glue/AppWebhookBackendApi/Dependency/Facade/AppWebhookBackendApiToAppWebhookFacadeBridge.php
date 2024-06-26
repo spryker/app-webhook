@@ -25,12 +25,6 @@ class AppWebhookBackendApiToAppWebhookFacadeBridge implements AppWebhookBackendA
         $this->appWebhookFacade = $appWebhookFacade;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WebhookRequestTransfer $webhookRequestTransfer
-     * @param \Generated\Shared\Transfer\WebhookResponseTransfer $webhookResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\WebhookResponseTransfer
-     */
     public function handleWebhook(WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer): WebhookResponseTransfer
     {
         return $this->appWebhookFacade->handleWebhook($webhookRequestTransfer, $webhookResponseTransfer);

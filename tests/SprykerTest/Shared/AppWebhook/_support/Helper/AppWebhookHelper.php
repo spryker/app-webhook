@@ -18,7 +18,7 @@ class AppWebhookHelper extends Module
     public function createSuccessfulWebhookHandlerPlugin(?Closure $callable = null): WebhookHandlerPluginInterface
     {
         return new class ($callable) implements WebhookHandlerPluginInterface {
-            public function __construct(?Closure $callable = null)
+            public function __construct(protected ?Closure $callable = null)
             {
             }
 
