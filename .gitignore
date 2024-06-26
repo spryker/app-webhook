@@ -1,0 +1,33 @@
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
+*.sublime-*
+
+# OS
+.DS_Store
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# grunt stuff
+.grunt
+.sass-cache
+/node_modules/
+
+# tooling
+vendor/
+composer.lock
+.phpunit.result.cache
+
+# built resources
+src/Generated
+src/Orm
+tests/_data/app_kernel_db
+
+# tests
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep
