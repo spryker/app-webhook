@@ -38,7 +38,7 @@ class AppWebhookDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @return array<\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface>
      */
-    private function getWebhookHandlerPlugins(): array
+    protected function getWebhookHandlerPlugins(): array
     {
         // Only set in tests and on project level.
         // @codeCoverageIgnoreStart
