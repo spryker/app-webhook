@@ -5,53 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fec81f02-3776-42bf-a841-4fa29d2a8d31" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/app-webhook.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/codeception.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/Shared/config_default.php" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/Shared/config_local.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/infection.json5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpstan-bootstrap.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rector.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/api/app_webhook_openapi.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/AppWebhookBackendApiConfig.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/AppWebhookBackendApiDependencyProvider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/AppWebhookBackendApiFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Controller/WebhooksController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Dependency/Facade/AppWebhookBackendApiToAppWebhookFacadeBridge.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Dependency/Facade/AppWebhookBackendApiToAppWebhookFacadeInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Mapper/Webhook/GlueRequestWebhookMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Mapper/Webhook/GlueResponseWebhookMapper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Plugin/AppWebhookBackendApi/GlueRequestWebhookMapperPluginInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Glue/AppWebhookBackendApi/Plugin/GlueApplication/AppWebhookBackendApiRouteProviderPlugin.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Shared/AppWebhook/Transfer/app_webhook.transfer.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/AppWebhookDependencyProvider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/Business/AppWebhookBusinessFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/Business/AppWebhookFacade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/Business/AppWebhookFacadeInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/Business/WebhookHandler/WebhookHandler.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Spryker/Zed/AppWebhook/Dependency/Plugin/WebhookHandlerPluginInterface.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/SprykerTest/Glue/AppWebhookBackendApi/RestApi/AppWebhookApiTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/SprykerTest/Glue/AppWebhookBackendApi/_support/AppWebhookBackendApiTester.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/SprykerTest/Glue/AppWebhookBackendApi/_support/_generated/AppWebhookBackendApiTesterActions.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/SprykerTest/Glue/AppWebhookBackendApi/codeception.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/SprykerTest/Shared/AppWebhook/_support/Helper/AppWebhookHelper.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/_data/CreateMySqlDatabase.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/_data/Environment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/bin/console" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,20 +31,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/reneklatt/www/app-webhook&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/extracted-app-webhook",
+    "last_opened_file_path": "/Users/reneklatt/www/app-webhook",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.webide.settings.project.settings.php",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
