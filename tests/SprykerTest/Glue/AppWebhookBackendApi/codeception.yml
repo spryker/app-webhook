@@ -26,7 +26,6 @@ suites:
                     \SprykerTest\Shared\Testify\Helper\LocatorHelper:
                         projectNamespaces:
                             - Spryker
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Glue\Testify\Helper\DependencyProviderHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
@@ -35,5 +34,3 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\AppKernel\Helper\AppConfigHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
