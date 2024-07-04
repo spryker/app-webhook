@@ -27,6 +27,11 @@ class AppWebhookBackendApiConfig extends AbstractBundleConfig
     public const WEBHOOK_ENDPOINT_PATH = '/webhooks';
 
     /**
+     * @var string
+     */
+    public const WEBHOOK_ENDPOINT_PATH_TEST = '/webhooks/test';
+
+    /**
      * This method is used in the GlueResponseWebhookMapper to set the resource type.
      *
      * @api
@@ -35,13 +40,6 @@ class AppWebhookBackendApiConfig extends AbstractBundleConfig
     {
         return 'overwrite on project level';
     }
-
-    /**
-     * @api
-     *
-     * @var string
-     */
-    public const WEBHOOK_ENDPOINT_PATH_TEST = '/webhooks/test';
 
     public function getModeByEndpointPath(string $endpointPath): string
     {

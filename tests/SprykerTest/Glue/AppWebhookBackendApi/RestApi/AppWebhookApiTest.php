@@ -34,6 +34,11 @@ class AppWebhookApiTest extends Unit
 
     protected AppWebhookBackendApiTester $tester;
 
+    protected function _before(): void
+    {
+        parent::_before();
+    }
+
     public function testGivenAGlueRequestWithoutContentWhenTheRequestIsHandledThenAHttpStatus400AndAnErrorMessageIsReturnedInTheGlueResponseTransfer(): void
     {
         // Arrange
