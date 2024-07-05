@@ -25,3 +25,4 @@ tests/_data/app_webhook_db
 tests/**/_generated/
 tests/_output/*
 !tests/_output/.gitkeep
+composer.lock
