@@ -1,0 +1,36 @@
+namespace: SprykerTest\Glue\AppWebhookBackendApi
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    show_uncovered: true
+    whitelist:
+        include:
+            - '../../../../src/Spryker/*/AppWebhookBackendApi/*'
+            - '../../../../src/Spryker/*/AppWebhook/*'
+suites:
+    RestApi:
+        actor: AppWebhookBackendApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\AppWebhook\Helper\AppWebhookHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                -
+                    \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                        projectNamespaces:
+                            - Spryker
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Glue\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Glue\Testify\Helper\GlueBackendApiHelper
+                - \SprykerTest\Glue\Testify\Helper\JsonPath
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\AppKernel\Helper\AppConfigHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper

@@ -1,0 +1,28 @@
+# IDE
+.idea/
+.project/
+nbproject/
+.buildpath/
+.settings/
+*.sublime-*
+
+# OS
+.DS_Store
+*.AppleDouble
+*.AppleDB
+*.AppleDesktop
+
+# tooling
+vendor/
+composer.lock
+
+# built resources
+src/Generated
+src/Orm
+tests/_data/app_webhook_db
+
+# tests
+tests/**/_generated/
+tests/_output/*
+!tests/_output/.gitkeep
+composer.lock
