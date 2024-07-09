@@ -54,6 +54,24 @@ class AppWebhookApiTest extends Unit
         $this->assertSame('POST content is required.', $glueResponseTransfer->getErrors()[0]->getMessage());
     }
 
+    public function testGivenAValidGlueRequestWhenTheRequestIsNotHandledByAnyOfTheAttachedPluginsThenAnExceptionIsThrownHttpStatus400IsReturnedTogetherWithAMessageInTheGlueResponseTransfer(): void
+    {
+        // Arrange
+        $glueRequestTransfer = new GlueRequestTransfer();
+        $glueRequestTransfer
+            ->setContent('{"key": "value"}')
+            ->setPath('/webhooks');
+
+        $webhooksController = new WebhooksController();
+
+        // Act
+        $glueResponseTransfer = $webhooksController->postAction($glueRequestTransfer);
+
+        // Assert
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $glueResponseTransfer->getHttpStatus());
+        $this->assertCount(1, $glueResponseTransfer->getErrors());
+    }
+
     public function testGivenAValidGlueRequestWhenTheRequestIsHandledAndTheWebhookResponseIsSuccessfulThenAHttpStatus200IsReturnedInTheGlueResponseTransfer(): void
     {
         // Arrange
