@@ -38,6 +38,8 @@ class GlueResponseWebhookMapper
             $glueResponseTransfer->addError((new GlueErrorTransfer())->setMessage($webhookResponseTransfer->getMessage()));
         }
 
+        $glueResponseTransfer->setContent($webhookResponseTransfer->getContent());
+
         return $glueResponseTransfer;
     }
 }
