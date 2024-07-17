@@ -29,6 +29,12 @@ class WebhookHandler
             $webhookResponseTransfer = $webhookHandlerPlugin->handleWebhook($webhookRequestTransfer, $webhookResponseTransfer);
         }
 
+        if ($webhookResponseTransfer->getIsSuccessful() === null) {
+            $webhookResponseTransfer
+                ->setIsSuccessful(false)
+                ->setMessage(sprintf('The webhook was not handled by any of the registered plugins. WebhookRequestTransfer: %s', json_encode($webhookRequestTransfer->toArray())));
+        }
+
         return $webhookResponseTransfer;
     }
 }
