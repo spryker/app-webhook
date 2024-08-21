@@ -56,7 +56,7 @@ class WebhookHandler
             }
 
             // Using packages may not set or use the isHandled at all (null by default), so we need to check for null explicitly.
-            if ($webhookResponseTransfer->getIsHandled() === true || $webhookResponseTransfer->getIsHandled() === null) {
+            if ($webhookResponseTransfer->getIsSuccessful() === true && ($webhookResponseTransfer->getIsHandled() === true || $webhookResponseTransfer->getIsHandled() === null)) {
                 $this->appWebhookEntityManager->deleteWebhookRequest($webhookRequestTransfer);
             }
         } catch (Throwable $throwable) {

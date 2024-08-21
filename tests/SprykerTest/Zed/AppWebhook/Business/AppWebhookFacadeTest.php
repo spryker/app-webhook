@@ -171,6 +171,36 @@ class AppWebhookFacadeTest extends Unit
         $this->tester->assertWebhookIsNotPersisted($defaultIdentifier);
     }
 
+    public function testGivenAValidWebhookThatCanBeProcessedNowWhenTheWebhookIsProcessedAndTheWebhookResponseReturnsIsHandledNullAndIsSuccessfulFalseThenItIsNotRemovedFromPersistence(): void
+    {
+        // Arrange
+        $defaultIdentifier = Uuid::uuid4()->toString();
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setContent('{foo: bar}')
+            ->setMode('async');
+
+        $webhookResponseTransfer = new WebhookResponseTransfer();
+
+        $webhookHandlerPlugin = $this->tester->createFailingWebhookHandlerPlugin('Something went wrong');
+
+        $this->tester->setDependency(AppWebhookDependencyProvider::PLUGINS_WEBHOOK_HANDLER, [$webhookHandlerPlugin]);
+        $this->tester->mockFactoryMethod('createIdentifierBuilder', Stub::makeEmpty(IdentifierBuilderInterface::class, [
+            'getIdentifier' => $defaultIdentifier,
+        ]));
+
+        // Act
+        $webhookResponseTransfer = $this->tester->getFacade()->handleWebhook($webhookRequestTransfer, $webhookResponseTransfer);
+
+        // Assert
+        $this->assertFalse($webhookResponseTransfer->getIsSuccessful(), 'Expected that the webhook is not successful but is.');
+        $this->assertNull($webhookResponseTransfer->getIsHandled(), 'Expected that the webhook is handled is set to null (default).');
+
+        // This also asserts that by default sequence_number is set to 0
+        $this->tester->assertWebhookIsPersisted($defaultIdentifier);
+    }
+
     public function testGivenAnUnprocessedWebhookRequestExistsInTheDatabaseAndAnotherValidWebhookThatCanNotBeProcessedNowAndCanBeProcessedLaterWhenTheWebhookIsProcessedThenItIsPersistedForLaterProcessingWithTheNextAvailableSequenceNumber(): void
     {
         // Arrange
