@@ -8,16 +8,38 @@
 namespace Spryker\Zed\AppWebhook\Business;
 
 use Spryker\Zed\AppWebhook\AppWebhookDependencyProvider;
+use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilder;
+use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilderInterface;
 use Spryker\Zed\AppWebhook\Business\WebhookHandler\WebhookHandler;
+use Spryker\Zed\AppWebhook\Business\WebhookProcessor\WebhookProcessor;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookRepositoryInterface getRepository()
+ */
 class AppWebhookBusinessFactory extends AbstractBusinessFactory
 {
     public function createWebhookHandler(): WebhookHandler
     {
         return new WebhookHandler(
             $this->getAppWebhookHandlerPlugins(),
+            $this->getEntityManager(),
+            $this->createIdentifierBuilder(),
         );
+    }
+
+    public function createWebhookProcessor(): WebhookProcessor
+    {
+        return new WebhookProcessor(
+            $this->createWebhookHandler(),
+            $this->getRepository(),
+        );
+    }
+
+    public function createIdentifierBuilder(): IdentifierBuilderInterface
+    {
+        return new IdentifierBuilder();
     }
 
     /**
