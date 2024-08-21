@@ -17,7 +17,7 @@
         <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="WebhookInboxCriteria">
+    <transfer name="WebhookInboxCriteria" strict="true">
         <property name="identifier" type="array" singular="identifier"/>
     </transfer>
 
