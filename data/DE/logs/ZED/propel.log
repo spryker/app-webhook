@@ -1,7 +1,0 @@
-[2024-08-21T07:57:52.760961+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:01:33.888727+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:02:25.094834+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:03:20.923046+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:04:39.624414+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:05:22.702889+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
-[2024-08-21T08:10:00.680570+00:00] defaultLogger.ERROR: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: spy_webhook_inbox.identifier, spy_webhook_inbox.sequence_number [] []
