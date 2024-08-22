@@ -20,6 +20,7 @@ composer.lock
 src/Generated
 src/Orm
 tests/_data/app_webhook_db
+/data/DE/logs/ZED/propel.log
 
 # tests
 tests/**/_generated/
