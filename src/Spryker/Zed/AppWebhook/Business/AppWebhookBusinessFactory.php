@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookRepositoryInterface getRepository()
+ * @method \Spryker\Zed\AppWebhook\AppWebhookConfig getConfig()
  */
 class AppWebhookBusinessFactory extends AbstractBusinessFactory
 {
@@ -24,6 +25,7 @@ class AppWebhookBusinessFactory extends AbstractBusinessFactory
     {
         return new WebhookHandler(
             $this->getAppWebhookHandlerPlugins(),
+            $this->getConfig(),
             $this->getEntityManager(),
             $this->createIdentifierBuilder(),
         );

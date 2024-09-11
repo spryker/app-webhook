@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\AppWebhook\Persistence\AppWebhookRepositoryInterface getRepository()
+ * @method \Spryker\Zed\AppWebhook\AppWebhookConfig getConfig()
  */
 class AppWebhookPersistenceFactory extends AbstractPersistenceFactory
 {

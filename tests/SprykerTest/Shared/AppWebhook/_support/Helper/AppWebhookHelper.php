@@ -105,7 +105,7 @@ class AppWebhookHelper extends Module
         };
     }
 
-    public function haveWebhookRequestPersisted(WebhookRequestTransfer $webhookRequestTransfer, string $message = ''): void
+    public function haveWebhookRequestPersisted(WebhookRequestTransfer $webhookRequestTransfer, string $message = '', ?int $numberOfRetries = null): void
     {
         $spyWebhookInboxEntity = new SpyWebhookInbox();
         $spyWebhookInboxEntity
@@ -113,6 +113,10 @@ class AppWebhookHelper extends Module
             ->setWebhook(json_encode($webhookRequestTransfer->toArray()))
             ->setMessage($message)
             ->setSequenceNumber($this->getSequenceNumber($webhookRequestTransfer->getIdentifierOrFail()));
+
+        if ($numberOfRetries) {
+            $spyWebhookInboxEntity->setRetries($numberOfRetries + 1);
+        }
 
         $spyWebhookInboxEntity->save();
     }

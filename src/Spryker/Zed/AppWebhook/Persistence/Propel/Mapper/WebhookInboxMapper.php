@@ -16,6 +16,9 @@ class WebhookInboxMapper
         SpyWebhookInbox $spyWebhookInbox,
         WebhookRequestTransfer $webhookRequestTransfer
     ): WebhookRequestTransfer {
-        return $webhookRequestTransfer->fromArray(json_decode($spyWebhookInbox->getWebhook(), true));
+        $webhookRequestTransfer->fromArray(json_decode($spyWebhookInbox->getWebhook(), true));
+        $webhookRequestTransfer->setRetries($spyWebhookInbox->getRetries());
+
+        return $webhookRequestTransfer;
     }
 }

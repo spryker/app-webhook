@@ -9,7 +9,10 @@ namespace Spryker\Zed\AppWebhook\Business\WebhookHandler;
 
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
+use Spryker\Zed\AppWebhook\AppWebhookConfig;
+use Spryker\Zed\AppWebhook\Business\Exception\AllowedNumberOfRetriesExceededException;
 use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilderInterface;
+use Spryker\Zed\AppWebhook\Business\MessageBuilder\MessageBuilder;
 use Spryker\Zed\AppWebhook\Persistence\AppWebhookEntityManagerInterface;
 use Throwable;
 
@@ -20,6 +23,7 @@ class WebhookHandler
      */
     public function __construct(
         protected array $webhookHandlerPlugins,
+        protected AppWebhookConfig $appWebhookConfig,
         protected AppWebhookEntityManagerInterface $appWebhookEntityManager,
         protected IdentifierBuilderInterface $identifierBuilder
     ) {
@@ -34,6 +38,13 @@ class WebhookHandler
         if ($webhookRequestTransfer->getIsRetry() !== true) {
             $webhookRequestTransfer->setIdentifier($identifier);
             $this->appWebhookEntityManager->saveWebhookRequest($webhookRequestTransfer);
+        }
+
+        // Delete the webhook when the number of retries is exceeded and throw an exception.
+        if ($webhookRequestTransfer->getIsRetry() === true && $webhookRequestTransfer->getRetries() >= $this->appWebhookConfig->getAllowedNumberOfWebhookRetries()) {
+            $this->appWebhookEntityManager->deleteWebhookRequest($webhookRequestTransfer);
+
+            throw new AllowedNumberOfRetriesExceededException(MessageBuilder::allowedNumberOfRetriesExceeded());
         }
 
         try {

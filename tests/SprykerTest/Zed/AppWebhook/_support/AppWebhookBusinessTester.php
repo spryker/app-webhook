@@ -28,6 +28,7 @@ use Codeception\Actor;
  * @SuppressWarnings(PHPMD)
  *
  * @method \Spryker\Zed\AppWebhook\Business\AppWebhookFacadeInterface getFacade(?string $moduleName = NULL)
+ * @method \Spryker\Zed\AppWebhook\AppWebhookConfig getModuleConfig(?string $moduleName = NULL)
  */
 class AppWebhookBusinessTester extends Actor
 {

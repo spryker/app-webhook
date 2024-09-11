@@ -6,6 +6,7 @@
         <property name="mode" type="string"/>
         <property name="identifier" type="string" description="This is the default identifier set for internal processing."/>
         <property name="isRetry" type="bool" description="When this WebhookRequest was tried to be processed before we set this to not persist it again in the database."/>
+        <property name="retries" type="int" description="The number of how often this webhook was retried."/>
     </transfer>
 
     <transfer name="WebhookResponse" strict="true">
