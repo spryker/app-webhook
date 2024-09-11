@@ -26,7 +26,7 @@ class AppWebhookEntityManager extends AbstractEntityManager implements AppWebhoo
         $spyWebhookInboxEntity = $this->getFactory()->createWebhookInboxEntity();
         $spyWebhookInboxEntity
             ->setIdentifier($webhookRequestTransfer->getIdentifierOrFail())
-            ->setWebhook(json_encode($webhookRequestTransfer->toArray()));
+            ->setWebhook((string)json_encode($webhookRequestTransfer->toArray()));
 
         $spyWebhookInboxEntity->save();
     }
@@ -44,11 +44,15 @@ class AppWebhookEntityManager extends AbstractEntityManager implements AppWebhoo
             ->filterByIdentifier($webhookRequestTransfer->getIdentifierOrFail())
             ->findOne();
 
+        if ($spyWebhookInboxEntity === null) {
+            return;
+        }
+
         if ($sequenceNumber !== null && $sequenceNumber !== 0) {
             $spyWebhookInboxEntity->setSequenceNumber($sequenceNumber);
         }
 
-        // Update the number of retries when the WebhookRequestTransfer contains the isRetry flag.
+        // Update the number of retries when the WebhookRequestTransfer has the isRetry flag set to true.
         if ($webhookRequestTransfer->getIsRetry() === true) {
             $spyWebhookInboxEntity->setRetries($spyWebhookInboxEntity->getRetries() + 1);
         }
@@ -90,6 +94,10 @@ class AppWebhookEntityManager extends AbstractEntityManager implements AppWebhoo
         $spyWebhookInboxEntity = $this->getFactory()->createWebhookInboxQuery()
             ->filterByIdentifier($webhookRequestTransfer->getIdentifierOrFail())
             ->findOne();
+
+        if ($spyWebhookInboxEntity === null) {
+            return;
+        }
 
         $spyWebhookInboxEntity->delete();
     }
