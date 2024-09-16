@@ -9,6 +9,7 @@ namespace Spryker\Zed\AppWebhook\Business\WebhookHandler;
 
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\AppWebhook\AppWebhookConfig;
 use Spryker\Zed\AppWebhook\Business\Exception\AllowedNumberOfRetriesExceededException;
 use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilderInterface;
@@ -18,6 +19,8 @@ use Throwable;
 
 class WebhookHandler
 {
+    use LoggerTrait;
+
     /**
      * @param array<\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface> $webhookHandlerPlugins
      */
@@ -43,6 +46,9 @@ class WebhookHandler
         // Delete the webhook when the number of retries is exceeded and throw an exception.
         if ($webhookRequestTransfer->getIsRetry() === true && $webhookRequestTransfer->getRetries() >= $this->appWebhookConfig->getAllowedNumberOfWebhookRetries()) {
             $this->appWebhookEntityManager->deleteWebhookRequest($webhookRequestTransfer);
+            $this->getLogger()->error(MessageBuilder::allowedNumberOfRetriesExceeded(), [
+                WebhookRequestTransfer::CONTENT => $webhookRequestTransfer->getContent(),
+            ]);
 
             throw new AllowedNumberOfRetriesExceededException(MessageBuilder::allowedNumberOfRetriesExceeded());
         }
@@ -59,7 +65,7 @@ class WebhookHandler
             if ($webhookResponseTransfer->getIsSuccessful() === null) {
                 $webhookResponseTransfer
                     ->setIsSuccessful(false)
-                    ->setMessage(sprintf('The webhook was not handled by any of the registered plugins. WebhookRequestTransfer: %s', json_encode($webhookRequestTransfer->toArray())));
+                    ->setMessage(MessageBuilder::webhookWasNotHandledByAnyRegisteredPlugin($webhookRequestTransfer));
             }
 
             if ($webhookResponseTransfer->getIsHandled() === false) {
