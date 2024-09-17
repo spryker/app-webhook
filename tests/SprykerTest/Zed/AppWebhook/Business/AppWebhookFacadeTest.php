@@ -502,4 +502,36 @@ class AppWebhookFacadeTest extends Unit
         $this->tester->assertWebhookIsNotPersisted($identifier, 1);
         $this->tester->assertWebhookIsNotPersisted($identifier, 2);
     }
+
+    public function testGivenUnprocessedWebhookRequestsForAnIdentifierWhenThoseAreDeletedThenTheyAreRemovedFromTheDatabase(): void
+    {
+        // Arrange
+        $identifierOne = Uuid::uuid4()->toString();
+        $identifierTwo = Uuid::uuid4()->toString();
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setMode('async')
+            ->setIdentifier($identifierOne);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer);
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setMode('async')
+            ->setIdentifier($identifierTwo);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer);
+
+        $webhookInboxCriteriaTransfer = new WebhookInboxCriteriaTransfer();
+        $webhookInboxCriteriaTransfer
+            ->addIdentifier($identifierOne);
+
+        // Act
+        $this->tester->getFacade()->deleteWebhooks($webhookInboxCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertWebhookIsNotPersisted($identifierOne, 0);
+        $this->tester->assertWebhookIsPersisted($identifierTwo, 0);
+    }
 }

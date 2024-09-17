@@ -11,6 +11,7 @@ use Spryker\Zed\AppWebhook\AppWebhookDependencyProvider;
 use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilder;
 use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilderInterface;
 use Spryker\Zed\AppWebhook\Business\WebhookHandler\WebhookHandler;
+use Spryker\Zed\AppWebhook\Business\WebhookProcessor\WebhookDeleter;
 use Spryker\Zed\AppWebhook\Business\WebhookProcessor\WebhookProcessor;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -36,6 +37,13 @@ class AppWebhookBusinessFactory extends AbstractBusinessFactory
         return new WebhookProcessor(
             $this->createWebhookHandler(),
             $this->getRepository(),
+        );
+    }
+
+    public function createWebhookDeleter(): WebhookDeleter
+    {
+        return new WebhookDeleter(
+            $this->getEntityManager(),
         );
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Persistence;
 
+use Generated\Shared\Transfer\WebhookInboxCriteriaTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -100,5 +101,13 @@ class AppWebhookEntityManager extends AbstractEntityManager implements AppWebhoo
         }
 
         $spyWebhookInboxEntity->delete();
+    }
+
+    public function deleteWebhookRequests(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void
+    {
+        $this->getFactory()->createWebhookInboxQuery()
+            ->filterByIdentifier_In($webhookInboxCriteriaTransfer->getIdentifier())
+            ->find()
+            ->delete();
     }
 }

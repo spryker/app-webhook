@@ -36,4 +36,13 @@ interface AppWebhookFacadeInterface
      * @api
      */
     public function processUnprocessedWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Loads all unprocessed webhooks from the inbox.
+     * - Deletes unhandled webhook requests.
+     *
+     * @api
+     */
+    public function deleteWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
 }

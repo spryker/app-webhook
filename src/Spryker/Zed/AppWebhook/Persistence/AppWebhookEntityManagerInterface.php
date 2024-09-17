@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Persistence;
 
+use Generated\Shared\Transfer\WebhookInboxCriteriaTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
 
@@ -17,4 +18,6 @@ interface AppWebhookEntityManagerInterface
     public function updateWebhookRequest(WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer): void;
 
     public function deleteWebhookRequest(WebhookRequestTransfer $webhookRequestTransfer): void;
+
+    public function deleteWebhookRequests(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
 }
