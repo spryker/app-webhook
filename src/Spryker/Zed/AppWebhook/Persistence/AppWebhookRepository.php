@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\AppWebhook\Persistence;
 
+use Generated\Shared\Transfer\SpyWebhookInboxEntityTransfer;
 use Generated\Shared\Transfer\WebhookInboxCriteriaTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Orm\Zed\AppWebhook\Persistence\SpyWebhookInboxQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -42,10 +44,36 @@ class AppWebhookRepository extends AbstractRepository implements AppWebhookRepos
         SpyWebhookInboxQuery $spyWebhookInboxQuery,
         WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer
     ): SpyWebhookInboxQuery {
-        if ($webhookInboxCriteriaTransfer->getIdentifier() !== []) {
-            $spyWebhookInboxQuery->filterByIdentifier_In($webhookInboxCriteriaTransfer->getIdentifier());
+        if ($webhookInboxCriteriaTransfer->getIdentifiers() !== []) {
+            $spyWebhookInboxQuery->filterByIdentifier_In($webhookInboxCriteriaTransfer->getIdentifiers());
         }
 
         return $spyWebhookInboxQuery;
+    }
+
+    public function getWebhookInboxEntityTransferByIdentifier(string $identifier): SpyWebhookInboxEntityTransfer
+    {
+        /** @phpstan-var \Orm\Zed\AppWebhook\Persistence\SpyWebhookInbox */
+        $spyWebhookInboxEntity = $this->getFactory()->createWebhookInboxQuery()
+            ->filterByIdentifier($identifier)
+            ->findOne();
+
+        return $this->getFactory()->createWebhookInboxMapper()
+            ->mapWebhookInboxEntityToWebhookInboxEntityTransfer($spyWebhookInboxEntity, new SpyWebhookInboxEntityTransfer());
+    }
+
+    public function getLastWebhookInboxEntityTransferByIdentifier(string $identifier): ?SpyWebhookInboxEntityTransfer
+    {
+        $spyWebhookInboxEntity = $this->getFactory()->createWebhookInboxQuery()
+            ->filterByIdentifier($identifier)
+            ->orderBySequenceNumber(Criteria::DESC)
+            ->findOne();
+
+        if ($spyWebhookInboxEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createWebhookInboxMapper()
+            ->mapWebhookInboxEntityToWebhookInboxEntityTransfer($spyWebhookInboxEntity, new SpyWebhookInboxEntityTransfer());
     }
 }

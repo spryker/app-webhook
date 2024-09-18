@@ -58,6 +58,7 @@
     "test-strict": "vendor/bin/infection --threads=max --min-msi=100 --min-covered-msi=100",
     "test-strict-ci": "vendor/bin/infection --threads=max --logger-github=true --min-msi=100 --min-covered-msi=100",
     "test-cover": "codecept build && codecept run --coverage-xml",
+    "test-cover-html": "codecept build && codecept run --coverage-html",
     "rector": "vendor/bin/rector process src/Spryker/ --config rector.php --ansi",
     "rector-ci": "vendor/bin/rector process src/Spryker/ --config rector.php --ansi --dry-run",
     "local-ci": "composer cs-fix && composer cs-check && composer stan && composer rector-ci && composer test"

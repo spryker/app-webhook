@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\SpyWebhookInboxEntityTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Orm\Zed\AppWebhook\Persistence\SpyWebhookInbox;
 
@@ -20,5 +21,14 @@ class WebhookInboxMapper
         $webhookRequestTransfer->setRetries($spyWebhookInbox->getRetries());
 
         return $webhookRequestTransfer;
+    }
+
+    public function mapWebhookInboxEntityToWebhookInboxEntityTransfer(
+        SpyWebhookInbox $spyWebhookInbox,
+        SpyWebhookInboxEntityTransfer $spyWebhookInboxEntityTransfer
+    ): SpyWebhookInboxEntityTransfer {
+        $spyWebhookInboxEntityTransfer->fromArray($spyWebhookInbox->toArray(), true);
+
+        return $spyWebhookInboxEntityTransfer;
     }
 }

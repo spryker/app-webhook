@@ -46,6 +46,6 @@ class AppWebhookFacade extends AbstractFacade implements AppWebhookFacadeInterfa
      */
     public function deleteWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void
     {
-        $this->getFactory()->createWebhookDeleter()->deleteWebhooks($webhookInboxCriteriaTransfer);
+        $this->getEntityManager()->deleteWebhookRequests($webhookInboxCriteriaTransfer);
     }
 }
