@@ -15,8 +15,6 @@ interface AppWebhookEntityManagerInterface
 {
     public function saveWebhookRequest(WebhookRequestTransfer $webhookRequestTransfer): void;
 
-//    public function updateWebhookRequest(WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer): void;
-
     public function deleteWebhookRequest(WebhookRequestTransfer $webhookRequestTransfer): void;
 
     public function deleteWebhookRequests(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
