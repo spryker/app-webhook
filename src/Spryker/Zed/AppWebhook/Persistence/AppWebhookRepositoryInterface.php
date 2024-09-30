@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Persistence;
 
+use Generated\Shared\Transfer\SpyWebhookInboxEntityTransfer;
 use Generated\Shared\Transfer\WebhookInboxCriteriaTransfer;
 
 /**
@@ -18,4 +19,8 @@ interface AppWebhookRepositoryInterface
      * @return array<\Generated\Shared\Transfer\WebhookRequestTransfer>
      */
     public function getUnprocessedWebhookRequests(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): array;
+
+    public function getWebhookInboxEntityTransferByIdentifier(string $identifier): SpyWebhookInboxEntityTransfer;
+
+    public function getLastWebhookInboxEntityTransferByIdentifier(string $identifier): ?SpyWebhookInboxEntityTransfer;
 }

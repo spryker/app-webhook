@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\AppWebhook\AppWebhookDependencyProvider;
+use Spryker\Zed\AppWebhook\Business\Exception\AllowedNumberOfRetriesExceededException;
 use Spryker\Zed\AppWebhook\Business\Identifier\IdentifierBuilderInterface;
 use SprykerTest\Zed\AppWebhook\AppWebhookBusinessTester;
 
@@ -373,6 +374,86 @@ class AppWebhookFacadeTest extends Unit
     /**
      * @group single
      */
+    public function testGivenAnUnprocessedWebhookRequestWhenItWillBeRetriedAndTheNumberOfRetriesIsHigherThanTheConfiguredAllowedNumberOfRetriesThenItWillBeDeleted(): void
+    {
+        // Arrange
+        $identifier = Uuid::uuid4()->toString(); // The one that is already persisted
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setContent('{foo: bar}')
+            ->setMode('async')
+            ->setIdentifier($identifier)
+            ->setIsRetry(true)
+            ->setRetries($this->tester->getModuleConfig()->getAllowedNumberOfWebhookRetries() + 1);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer, 'First message', $this->tester->getModuleConfig()->getAllowedNumberOfWebhookRetries());
+
+        $webhookResponseTransfer = new WebhookResponseTransfer();
+
+        $callable = function (WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer) use ($identifier) {
+            $webhookResponseTransfer
+                ->setIsHandled(false); // This will make it fail
+
+            return $webhookResponseTransfer;
+        };
+
+        $webhookHandlerPlugin = $this->tester->createSuccessfulWebhookHandlerPlugin($callable);
+
+        $this->tester->setDependency(AppWebhookDependencyProvider::PLUGINS_WEBHOOK_HANDLER, [$webhookHandlerPlugin]);
+
+        // Expect
+        $this->expectException(AllowedNumberOfRetriesExceededException::class);
+
+        // Act
+        $webhookResponseTransfer = $this->tester->getFacade()->handleWebhook($webhookRequestTransfer, $webhookResponseTransfer);
+
+        // Assert
+        // Ensure that the WebhookRequest is deleted from the persistence as it seems to never possible to handle it.
+        $this->tester->assertWebhookIsNotPersisted($identifier);
+    }
+
+    /**
+     * @group single
+     */
+    public function testGivenAnUnprocessedWebhookRequestWhenItWillBeRetriedAndTheNumberOfRetriesIsHigherThanTheConfiguredAllowedNumberOfRetriesThenAnExceptionIsThrown(): void
+    {
+        // Arrange
+        $identifier = Uuid::uuid4()->toString(); // The one that is already persisted
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setContent('{foo: bar}')
+            ->setMode('async')
+            ->setIdentifier($identifier)
+            ->setIsRetry(true)
+            ->setRetries($this->tester->getModuleConfig()->getAllowedNumberOfWebhookRetries() + 1);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer, 'First message', $this->tester->getModuleConfig()->getAllowedNumberOfWebhookRetries());
+
+        $webhookResponseTransfer = new WebhookResponseTransfer();
+
+        $callable = function (WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer) use ($identifier) {
+            $webhookResponseTransfer
+                ->setIsHandled(false); // This will make it fail
+
+            return $webhookResponseTransfer;
+        };
+
+        $webhookHandlerPlugin = $this->tester->createSuccessfulWebhookHandlerPlugin($callable);
+
+        $this->tester->setDependency(AppWebhookDependencyProvider::PLUGINS_WEBHOOK_HANDLER, [$webhookHandlerPlugin]);
+
+        // Expect
+        $this->expectException(AllowedNumberOfRetriesExceededException::class);
+
+        // Act
+        $webhookResponseTransfer = $this->tester->getFacade()->handleWebhook($webhookRequestTransfer, $webhookResponseTransfer);
+    }
+
+    /**
+     * @group single
+     */
     public function testGivenUnprocessedWebhookRequestsForAnIdentifierWhenThoseAreProcessedThenTheyAreProcessedInTheOrderOfTheirSequenceNumber(): void
     {
         // Arrange
@@ -420,5 +501,37 @@ class AppWebhookFacadeTest extends Unit
         $this->tester->assertWebhookIsNotPersisted($identifier, 0);
         $this->tester->assertWebhookIsNotPersisted($identifier, 1);
         $this->tester->assertWebhookIsNotPersisted($identifier, 2);
+    }
+
+    public function testGivenUnprocessedWebhookRequestsForAnIdentifierWhenThoseAreDeletedThenTheyAreRemovedFromTheDatabase(): void
+    {
+        // Arrange
+        $identifierOne = Uuid::uuid4()->toString();
+        $identifierTwo = Uuid::uuid4()->toString();
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setMode('async')
+            ->setIdentifier($identifierOne);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer);
+
+        $webhookRequestTransfer = new WebhookRequestTransfer();
+        $webhookRequestTransfer
+            ->setMode('async')
+            ->setIdentifier($identifierTwo);
+
+        $this->tester->haveWebhookRequestPersisted($webhookRequestTransfer);
+
+        $webhookInboxCriteriaTransfer = new WebhookInboxCriteriaTransfer();
+        $webhookInboxCriteriaTransfer
+            ->addIdentifier($identifierOne);
+
+        // Act
+        $this->tester->getFacade()->deleteWebhooks($webhookInboxCriteriaTransfer);
+
+        // Assert
+        $this->tester->assertWebhookIsNotPersisted($identifierOne, 0);
+        $this->tester->assertWebhookIsPersisted($identifierTwo, 0);
     }
 }

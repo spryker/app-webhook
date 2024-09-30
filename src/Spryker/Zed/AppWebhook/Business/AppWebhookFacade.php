@@ -38,4 +38,14 @@ class AppWebhookFacade extends AbstractFacade implements AppWebhookFacadeInterfa
     {
         $this->getFactory()->createWebhookProcessor()->processUnprocessedWebhooks($webhookInboxCriteriaTransfer);
     }
+
+    /**
+     * @api
+     *
+     * @inheritDoc
+     */
+    public function deleteWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void
+    {
+        $this->getEntityManager()->deleteWebhookRequests($webhookInboxCriteriaTransfer);
+    }
 }
