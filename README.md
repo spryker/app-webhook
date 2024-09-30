@@ -41,9 +41,9 @@ vendor/bin/codecept run
 
 ### Webhook handling
 
-This module is responsible to receive and handle webhooks. The module provides a controller that can be used to handle incoming webhooks.
+This package is responsible to receive and handle webhooks. The package provides a controller that can be used to handle incoming webhooks.
 
-The API endpoint is `/webhooks` and the controller is `WebhooksController` inside the Glue Application. This package is not handling webhooks on its own you must implment the logic to handle the webhooks via the provided `\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface` see description down below.
+The API endpoint is `/webhooks` and the controller is `WebhooksController` inside the Glue Application. This package is not handling webhooks on its own, you must implement the logic to handle the webhooks via the provided `\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface`, see the description down below.
 
 #### Process in a Nutshell
 
@@ -62,16 +62,16 @@ The API endpoint is `/webhooks` and the controller is `WebhooksController` insid
   - When the handler returns a successful `WebhookResponseTransfer` the webhook will be removed from the database.
   - It returns the `WebhookResponseTransfer` to the controller.
 - The controller formats the `WebhookResponseTransfer` into a Glue response which will be either:
-  - 200 OK in case of everything went well.
+  - 200 OK in case everything went well.
   - 400 BAD REQUEST in case of a failed response.
 
 #### Retry Mechanism
 
-In some case of a webhook can not be handled it will be persisted in the database and will be retried with the next incoming webhook. The number of retries is configurable and can be set in the `AppWebhookConfig::getAllowedNumberOfRetries()` method.
+In a case when a webhook can not be handled it is persisted in the database and will be retried with the next incoming webhook. The number of retries is configurable and can be set in the `AppWebhookConfig::getAllowedNumberOfRetries()` method.
 
-There are numerous reasons when a webhook may fail. An exception is thrown, the called plugin implemntation returns a failed response or the plugin implementation returns a not handled response.
+There are numerous reasons why a webhook may fail. An exception is thrown, the plugin implementation returns a failed response or the plugin implementation returns a not handled response.
 
-Another case could be an event is sent to the application before it is ready to handle it. F.e. in the PreOrder payment of a PSP the order is not persisted yet and has no order-reference but the PSP sends a webhook to do something with the order-reference the system has to wait until it can process the webhook.
+Another case could be an event is sent to the application before it is ready to handle it. For example, in the PreOrder payment of a PSP the order has not persisted yet and has no order-reference, but the PSP sends a webhook request about a payment state, in this case, the system has to wait until it can process the webhook.
 
 ##### Future improvements for the Retry mechanism
 
@@ -93,11 +93,11 @@ This plugin provides the routes for the AppWebhookBackendApi module.
 
 #### \Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface
 
-This plugin can be iomplemented by any other module and has two methods:
+This plugin can be implemented by any other module and has two methods:
 
 - `\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface::canHandle(WebhookRequestTransfer $webhookRequestTransfer): bool`
 - `\Spryker\Zed\AppWebhook\Dependency\Plugin\WebhookHandlerPluginInterface::handle(WebhookRequestTransfer $webhookRequestTransfer): WebhookResponseTransfer`
 
-The `canHandle` method is used to check if a webhook can be handled by a specific module. F.e. you have two handlers one for `order.created` and one for `order.updated` you can check in the `canHandle` method if the webhook can be handled by the module and return true or false.
+The `canHandle()` method is used to check if a webhook can be handled by a specific module. F.e. you have two handlers one for `order.created` and one for `order.updated` you can check in the `canHandle()` method if the webhook can be handled by the module and return true or false.
 
-The `handle` method is used to handle the webhook. The method is called if the `canHandle` method returns true. The method should return a `WebhookResponseTransfer` with the status of the webhook handling.
+The `handle()` method is used to handle the webhook. The method is called if the `canHandle()` method returns true. The method should return a `WebhookResponseTransfer` with the status of the webhook handling.
