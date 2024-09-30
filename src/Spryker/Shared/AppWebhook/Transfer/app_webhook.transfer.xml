@@ -4,12 +4,22 @@
     <transfer name="WebhookRequest" strict="true">
         <property name="content" type="string"/>
         <property name="mode" type="string"/>
+        <property name="identifier" type="string" description="This is the default identifier set for internal processing."/>
+        <property name="isRetry" type="bool" description="When this WebhookRequest was tried to be processed before we set this to not persist it again in the database."/>
+        <property name="retries" type="int" description="The number of how often this webhook was retried."/>
     </transfer>
 
     <transfer name="WebhookResponse" strict="true">
         <property name="isSuccessful" type="bool"/>
+        <property name="isHandled" type="bool" description="A Webhook can be accepted for later processing and setting this to false will keep it persisted. When true or null it will be removed from persistence."/>
+        <property name="identifier" type="string" description="The identifier will be set from outside and used to find previously unprocessed webhooks and execute them when possible."/>
+        <property name="sequenceNumber" type="int" description="This number will be set from outside. When there were already unprocessed webhooks for the same identifier this number will be increased."/>
         <property name="content" type="string"/>
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="WebhookInboxCriteria" strict="true">
+        <property name="identifiers" type="array" singular="identifier"/>
     </transfer>
 
     <transfer name="GlueError">

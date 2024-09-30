@@ -51,6 +51,11 @@ jobs:
             - name: Composer install
               run: composer install --optimize-autoloader
 
+            - name: Setup Database
+              run: |
+                  mkdir -p tests/_data
+                  touch tests/_data/app_webhook_db
+
             - name: Setup AppWebhook
               run: composer setup
 

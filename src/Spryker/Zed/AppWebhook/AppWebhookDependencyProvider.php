@@ -10,6 +10,9 @@ namespace Spryker\Zed\AppWebhook;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\AppWebhook\AppWebhookConfig getConfig()
+ */
 class AppWebhookDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
