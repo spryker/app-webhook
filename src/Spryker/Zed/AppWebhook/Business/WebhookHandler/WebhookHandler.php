@@ -80,7 +80,7 @@ class WebhookHandler
             $this->getLogger()->error(
                 $throwable->getMessage(),
                 [
-                    'request_data' => $webhookRequestTransfer->toArray(),
+                    'request_data' => $webhookRequestTransfer->modifiedToArray(),
                 ],
             );
             $webhookResponseTransfer
