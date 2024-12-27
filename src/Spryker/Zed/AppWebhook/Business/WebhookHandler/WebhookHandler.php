@@ -77,6 +77,12 @@ class WebhookHandler
                 $this->appWebhookEntityManager->deleteWebhookRequest($webhookRequestTransfer);
             }
         } catch (Throwable $throwable) {
+            $this->getLogger()->error(
+                $throwable->getMessage(),
+                [
+                    'request_data' => $webhookRequestTransfer->modifiedToArray(),
+                ],
+            );
             $webhookResponseTransfer
                 ->setIsSuccessful(false)
                 ->setMessage($throwable->getMessage());
