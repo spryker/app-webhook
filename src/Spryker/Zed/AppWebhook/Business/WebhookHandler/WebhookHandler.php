@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\AppWebhook\Business\WebhookHandler;
 
-use Generated\Shared\Transfer\CancelPaymentRequestTransfer;
 use Generated\Shared\Transfer\SpyWebhookInboxEntityTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
