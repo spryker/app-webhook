@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Business\WebhookHandler;
 
+use Generated\Shared\Transfer\CancelPaymentRequestTransfer;
 use Generated\Shared\Transfer\SpyWebhookInboxEntityTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
@@ -77,6 +78,12 @@ class WebhookHandler
                 $this->appWebhookEntityManager->deleteWebhookRequest($webhookRequestTransfer);
             }
         } catch (Throwable $throwable) {
+            $this->getLogger()->error(
+                $throwable->getMessage(),
+                [
+                    'request_data' => $webhookRequestTransfer->toArray(),
+                ],
+            );
             $webhookResponseTransfer
                 ->setIsSuccessful(false)
                 ->setMessage($throwable->getMessage());
