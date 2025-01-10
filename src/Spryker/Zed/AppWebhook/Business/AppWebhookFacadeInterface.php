@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\AppWebhook\Business;
 
+use Generated\Shared\Transfer\WebhookInboxCriteriaTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
 use Generated\Shared\Transfer\WebhookResponseTransfer;
 
@@ -24,4 +25,24 @@ interface AppWebhookFacadeInterface
      * @api
      */
     public function handleWebhook(WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer): WebhookResponseTransfer;
+
+    /**
+     * Specification:
+     * - Process unhandled webhook requests.
+     * - Loads all unprocessed webhooks from the inbox.
+     * - Converts entities to transfers.
+     * - Runs the WebhookHandler for all request transfers.
+     *
+     * @api
+     */
+    public function processUnprocessedWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Loads all unprocessed webhooks from the inbox.
+     * - Deletes unhandled webhook requests.
+     *
+     * @api
+     */
+    public function deleteWebhooks(WebhookInboxCriteriaTransfer $webhookInboxCriteriaTransfer): void;
 }

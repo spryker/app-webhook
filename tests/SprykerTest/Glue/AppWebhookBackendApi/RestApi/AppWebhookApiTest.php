@@ -10,6 +10,7 @@ namespace SprykerTest\Glue\AppWebhookBackendApi\RestApi;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\WebhookRequestTransfer;
+use Generated\Shared\Transfer\WebhookResponseTransfer;
 use Spryker\Glue\AppWebhookBackendApi\AppWebhookBackendApiDependencyProvider;
 use Spryker\Glue\AppWebhookBackendApi\Controller\WebhooksController;
 use Spryker\Glue\AppWebhookBackendApi\Plugin\AppWebhookBackendApi\GlueRequestWebhookMapperPluginInterface;
@@ -34,11 +35,6 @@ class AppWebhookApiTest extends Unit
 
     protected AppWebhookBackendApiTester $tester;
 
-    protected function _before(): void
-    {
-        parent::_before();
-    }
-
     public function testGivenAGlueRequestWithoutContentWhenTheRequestIsHandledThenAHttpStatus400AndAnErrorMessageIsReturnedInTheGlueResponseTransfer(): void
     {
         // Arrange
@@ -54,7 +50,7 @@ class AppWebhookApiTest extends Unit
         $this->assertSame('POST content is required.', $glueResponseTransfer->getErrors()[0]->getMessage());
     }
 
-    public function testGivenAValidGlueRequestWhenTheRequestIsNotHandledByAnyOfTheAttachedPluginsThenAnExceptionIsThrownHttpStatus400IsReturnedTogetherWithAMessageInTheGlueResponseTransfer(): void
+    public function testGivenAValidGlueRequestWhenTheRequestIsNotHandledByAnyOfTheAttachedPluginsThenAnExceptionIsThrownAndAHttpStatus400IsReturnedTogetherWithAMessageInTheGlueResponseTransfer(): void
     {
         // Arrange
         $glueRequestTransfer = new GlueRequestTransfer();
@@ -126,8 +122,10 @@ class AppWebhookApiTest extends Unit
         $webhooksController = new WebhooksController();
 
         $this->tester->setDependency(AppWebhookDependencyProvider::PLUGINS_WEBHOOK_HANDLER, [
-            $this->tester->createSuccessfulWebhookHandlerPlugin(function (WebhookRequestTransfer $webhookRequestTransfer): void {
+            $this->tester->createSuccessfulWebhookHandlerPlugin(function (WebhookRequestTransfer $webhookRequestTransfer, WebhookResponseTransfer $webhookResponseTransfer): WebhookResponseTransfer {
                 $this->assertSame($webhookRequestTransfer->getContent(), '{"foo": "bar"}');
+
+                return $webhookResponseTransfer;
             }),
         ]);
 
