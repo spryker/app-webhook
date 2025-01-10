@@ -9,6 +9,7 @@
     <transfer name="WebhookResponse" strict="true">
         <property name="isSuccessful" type="bool"/>
         <property name="content" type="string"/>
+        <property name="httpStatusCode" type="int"/>
         <property name="message" type="string"/>
     </transfer>
 

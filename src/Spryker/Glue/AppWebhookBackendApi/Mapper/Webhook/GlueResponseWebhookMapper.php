@@ -34,7 +34,7 @@ class GlueResponseWebhookMapper
         $glueResponseTransfer->setHttpStatus(Response::HTTP_OK);
 
         if ($webhookResponseTransfer->getIsSuccessful() !== true) {
-            $glueResponseTransfer->setHttpStatus(Response::HTTP_BAD_REQUEST);
+            $glueResponseTransfer->setHttpStatus($webhookResponseTransfer->getHttpStatusCode() ?? Response::HTTP_BAD_REQUEST);
             $glueResponseTransfer->addError((new GlueErrorTransfer())->setMessage($webhookResponseTransfer->getMessage()));
         }
 
