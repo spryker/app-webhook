@@ -15,6 +15,7 @@
         <property name="identifier" type="string" description="The identifier will be set from outside and used to find previously unprocessed webhooks and execute them when possible."/>
         <property name="sequenceNumber" type="int" description="This number will be set from outside. When there were already unprocessed webhooks for the same identifier this number will be increased."/>
         <property name="content" type="string"/>
+        <property name="httpStatusCode" type="int"/>
         <property name="message" type="string"/>
     </transfer>
 
